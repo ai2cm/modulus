@@ -492,6 +492,7 @@ class SphericalFourierNeuralOperatorNet(Module):
         self.checkpointing = (
             params.checkpointing if hasattr(params, "checkpointing") else checkpointing
         )
+        data_grid = params.data_grid if hasattr(params, "data_grid") else "equiangular"
         # self.pretrain_encoding = params.pretrain_encoding if hasattr(params, "pretrain_encoding") else False
 
         # compute the downscaled image size
@@ -527,10 +528,10 @@ class SphericalFourierNeuralOperatorNet(Module):
 
             # set up
             self.trans_down = sht_handle(
-                *self.img_shape, lmax=modes_lat, mmax=modes_lon, grid="equiangular"
+                *self.img_shape, lmax=modes_lat, mmax=modes_lon, grid=data_grid
             ).float()
             self.itrans_up = isht_handle(
-                *self.img_shape, lmax=modes_lat, mmax=modes_lon, grid="equiangular"
+                *self.img_shape, lmax=modes_lat, mmax=modes_lon, grid=data_grid
             ).float()
             self.trans = sht_handle(
                 self.h, self.w, lmax=modes_lat, mmax=modes_lon, grid="legendre-gauss"
