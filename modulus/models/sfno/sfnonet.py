@@ -492,6 +492,16 @@ class SphericalFourierNeuralOperatorNet(Module):
         self.checkpointing = (
             params.checkpointing if hasattr(params, "checkpointing") else checkpointing
         )
+        norm_track_running_stats = (
+            params.norm_track_running_stats
+            if hasattr(params, "track_running_stats")
+            else False
+        )
+        norm_running_stats_momentum = (
+            params.norm_running_stats_momentum
+            if hasattr(params, "running_stats_momentum")
+            else 0.0001
+        )
         data_grid = params.data_grid if hasattr(params, "data_grid") else "equiangular"
         # self.pretrain_encoding = params.pretrain_encoding if hasattr(params, "pretrain_encoding") else False
 
@@ -636,13 +646,19 @@ class SphericalFourierNeuralOperatorNet(Module):
                     eps=1e-6,
                     affine=True,
                 )
+                if norm_track_running_stats:
+                    raise NotImplementedError(
+                        "Error, track_running_stats not implemented for "
+                        "DistributedInstanceNorm2d."
+                    )
             else:
                 norm_layer0 = partial(
                     nn.InstanceNorm2d,
                     num_features=self.embed_dim,
                     eps=1e-6,
                     affine=True,
-                    track_running_stats=False,
+                    track_running_stats=norm_track_running_stats,
+                    momentum=norm_running_stats_momentum,
                 )
             norm_layer1 = norm_layer0
         elif self.normalization_layer == "none":
