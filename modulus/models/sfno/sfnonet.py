@@ -42,7 +42,6 @@ from modulus.utils.sfno.distributed.layers import (
 from modulus.utils.sfno.distributed import comm
 
 # layer normalization
-from apex.normalization import FusedLayerNorm
 from modulus.utils.sfno.distributed.layer_norm import DistributedInstanceNorm2d
 
 from modulus.models.module import Module
@@ -251,7 +250,6 @@ class FourierNeuralOperatorBlock(nn.Module):
             self.outer_skip_conv = nn.Conv2d(2 * embed_dim, embed_dim, 1, bias=False)
 
     def forward(self, x):
-
         x_norm = torch.zeros_like(x)
         x_norm[..., : self.input_shape_loc[0], : self.input_shape_loc[1]] = self.norm0(
             x[..., : self.input_shape_loc[0], : self.input_shape_loc[1]]
@@ -408,7 +406,6 @@ class SphericalFourierNeuralOperatorNet(Module):
         spectral_layers: int = 3,
         checkpointing: int = 0,
     ):
-
         super(SphericalFourierNeuralOperatorNet, self).__init__(meta=MetaData())
 
         self.params = params
@@ -656,7 +653,6 @@ class SphericalFourierNeuralOperatorNet(Module):
         # FNO blocks
         self.blocks = nn.ModuleList([])
         for i in range(self.num_layers):
-
             first_layer = i == 0
             last_layer = i == self.num_layers - 1
 
@@ -737,7 +733,7 @@ class SphericalFourierNeuralOperatorNet(Module):
             trunc_normal_(m.weight, std=0.02)
             if m.bias is not None:
                 nn.init.constant_(m.bias, 0)
-        elif isinstance(m, nn.LayerNorm) or isinstance(m, FusedLayerNorm):
+        elif isinstance(m, nn.LayerNorm):
             nn.init.constant_(m.bias, 0)
             nn.init.constant_(m.weight, 1.0)
 
@@ -747,7 +743,6 @@ class SphericalFourierNeuralOperatorNet(Module):
         return {"pos_embed", "cls_token"}
 
     def _forward_features(self, x):
-
         for blk in self.blocks:
             if self.checkpointing >= 3:
                 x = checkpoint(blk, x)
@@ -757,7 +752,6 @@ class SphericalFourierNeuralOperatorNet(Module):
         return x
 
     def forward(self, x):
-
         # save big skip
         if self.big_skip:
             residual = x
@@ -768,7 +762,6 @@ class SphericalFourierNeuralOperatorNet(Module):
             x = self.encoder(x)
 
         if hasattr(self, "pos_embed"):
-
             # old way of treating unequally shaped weights
             if self.img_shape_loc != self.img_shape_eff:
                 xp = torch.zeros_like(x)
