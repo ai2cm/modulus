@@ -42,6 +42,12 @@ from modulus.utils.sfno.distributed.layers import (
 from modulus.utils.sfno.distributed import comm
 
 # layer normalization
+# layer normalization
+try:
+    from apex.normalization import FusedLayerNorm
+    apex_imported = True
+except ImportError:
+    apex_imported = False
 from modulus.utils.sfno.distributed.layer_norm import DistributedInstanceNorm2d
 
 from modulus.models.module import Module
@@ -736,7 +742,7 @@ class SphericalFourierNeuralOperatorNet(Module):
             trunc_normal_(m.weight, std=0.02)
             if m.bias is not None:
                 nn.init.constant_(m.bias, 0)
-        elif isinstance(m, nn.LayerNorm):
+        elif isinstance(m, nn.LayerNorm) or (apex_imported and isinstance(m, FusedLayerNorm)):
             nn.init.constant_(m.bias, 0)
             nn.init.constant_(m.weight, 1.0)
 
