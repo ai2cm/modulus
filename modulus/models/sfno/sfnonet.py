@@ -42,7 +42,6 @@ from modulus.utils.sfno.distributed.layers import (
 from modulus.utils.sfno.distributed import comm
 
 # layer normalization
-# layer normalization
 try:
     from apex.normalization import FusedLayerNorm
     apex_imported = True
