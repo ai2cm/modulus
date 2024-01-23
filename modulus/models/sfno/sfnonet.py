@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from functools import partial
+import logging
 import torch
 import torch.nn as nn
 from torch.utils.checkpoint import checkpoint
@@ -412,7 +413,7 @@ class SphericalFourierNeuralOperatorNet(Module):
         spectral_layers: int = 3,
         checkpointing: int = 0,
     ):
-
+        logging.info("Initializing Spherical Fourier Neural Operator Network")
         super(SphericalFourierNeuralOperatorNet, self).__init__(meta=MetaData())
 
         self.params = params
@@ -517,6 +518,7 @@ class SphericalFourierNeuralOperatorNet(Module):
 
         # prepare the spectral transforms
         if self.spectral_transform == "sht":
+            logging.info("Preparing the SHT")
             sht_handle = th.RealSHT
             isht_handle = th.InverseRealSHT
 
@@ -660,6 +662,7 @@ class SphericalFourierNeuralOperatorNet(Module):
         # FNO blocks
         self.blocks = nn.ModuleList([])
         for i in range(self.num_layers):
+            logging.info(f"Creating SFNO block {i}")
 
             first_layer = i == 0
             last_layer = i == self.num_layers - 1
@@ -734,6 +737,7 @@ class SphericalFourierNeuralOperatorNet(Module):
             trunc_normal_(self.pos_embed, std=0.02)
 
         self.apply(self._init_weights)
+        logging.info("Finished initializing Spherical Fourier Neural Operator Network")
 
     def _init_weights(self, m):
         """Helper routine for weight initialization"""
