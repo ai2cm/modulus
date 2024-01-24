@@ -412,7 +412,7 @@ class SphericalFourierNeuralOperatorNet(Module):
         spectral_layers: int = 3,
         checkpointing: int = 0,
     ):
-
+        import pdb; pdb.set_trace()
         super(SphericalFourierNeuralOperatorNet, self).__init__(meta=MetaData())
 
         self.params = params
