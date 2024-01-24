@@ -711,7 +711,10 @@ class SphericalFourierNeuralOperatorNet(Module):
 
             self.blocks.append(block)
 
+
+
         # decoder
+        logging.info("Creating decoder")
         decoder_hidden_dim = self.embed_dim
         current_dim = self.embed_dim + self.big_skip * self.in_chans
         decoder_modules = []
@@ -725,6 +728,7 @@ class SphericalFourierNeuralOperatorNet(Module):
         self.decoder = nn.Sequential(*decoder_modules)
 
         # learned position embedding
+        logging.info("Creating position embedding")
         if self.pos_embed:
             # currently using deliberately a differently shape position embedding
             self.pos_embed = nn.Parameter(
@@ -741,6 +745,7 @@ class SphericalFourierNeuralOperatorNet(Module):
 
     def _init_weights(self, m):
         """Helper routine for weight initialization"""
+        logging.info("Setting weights for SFNO layer: " + str(m))
         if isinstance(m, nn.Linear) or isinstance(m, nn.Conv2d):
             trunc_normal_(m.weight, std=0.02)
             if m.bias is not None:
