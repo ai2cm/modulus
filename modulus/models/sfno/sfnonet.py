@@ -737,7 +737,7 @@ class SphericalFourierNeuralOperatorNet(Module):
                 )
             )
             # self.pos_embed = nn.Parameter( torch.zeros(1, self.embed_dim, self.img_shape_eff[0], self.img_shape_eff[1]) )
-            self.pos_embed.is_shared_mp = ["matmul"]
+            # self.pos_embed.is_shared_mp = ["matmul"] # commented out to see if it fixes segfault
             trunc_normal_(self.pos_embed, std=0.02)
 
         self.apply(self._init_weights)
