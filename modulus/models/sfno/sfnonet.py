@@ -728,8 +728,8 @@ class SphericalFourierNeuralOperatorNet(Module):
         self.decoder = nn.Sequential(*decoder_modules)
 
         # learned position embedding
-        logging.info("Creating position embedding")
         if self.pos_embed:
+            logging.info("Creating position embedding")
             # currently using deliberately a differently shape position embedding
             self.pos_embed = nn.Parameter(
                 torch.zeros(
@@ -737,8 +737,10 @@ class SphericalFourierNeuralOperatorNet(Module):
                 )
             )
             # self.pos_embed = nn.Parameter( torch.zeros(1, self.embed_dim, self.img_shape_eff[0], self.img_shape_eff[1]) )
-            # self.pos_embed.is_shared_mp = ["matmul"] # commented out to see if it fixes segfault
+            self.pos_embed.is_shared_mp = ["matmul"]
+            logging.info("Starting setting position embedding weights")
             trunc_normal_(self.pos_embed, std=0.02)
+            logging.info("Finished setting position embedding weights")
 
         self.apply(self._init_weights)
         logging.info("Finished initializing Spherical Fourier Neural Operator Network")

@@ -15,11 +15,13 @@
 import math
 import torch
 import warnings
+import logging
 
 
 def _no_grad_trunc_normal_(tensor, mean, std, a, b):
     # Cut & paste from PyTorch official master until it's in a few official releases - RW
     # Method based on https://people.sc.fsu.edu/~jburkardt/presentations/truncated_normal.pdf
+    logging.info("_no_grad_trunc_normal_")
     def norm_cdf(x):
         # Computes standard normal cumulative distribution function
         return (1.0 + math.erf(x / math.sqrt(2.0))) / 2.0
@@ -41,17 +43,20 @@ def _no_grad_trunc_normal_(tensor, mean, std, a, b):
         # Uniformly fill tensor with values from [l, u], then translate to
         # [2l-1, 2u-1].
         tensor.uniform_(2 * l - 1, 2 * u - 1)
-
+        logging.info("finished tensor.uniform_")
         # Use inverse cdf transform for normal distribution to get truncated
         # standard normal
         tensor.erfinv_()
+        logging.info("finished tensor.erfinv_")
 
         # Transform to proper mean, std
         tensor.mul_(std * math.sqrt(2.0))
         tensor.add_(mean)
+        logging.info("finished transform")
 
         # Clamp to ensure it's in the proper range
         tensor.clamp_(min=a, max=b)
+        logging.info("finished clamp_")
         return tensor
 
 
