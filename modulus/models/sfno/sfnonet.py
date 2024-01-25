@@ -499,6 +499,12 @@ class SphericalFourierNeuralOperatorNet(Module):
             params.checkpointing if hasattr(params, "checkpointing") else checkpointing
         )
         data_grid = params.data_grid if hasattr(params, "data_grid") else "equiangular"
+
+        self.pos_embed_inplace_erfinv = (
+            params.pos_embed_inplace_erfinv
+            if hasattr(params, "pos_embed_inplace_erfinv")
+            else pos_embed_inplace_erfinv
+        )
         # self.pretrain_encoding = params.pretrain_encoding if hasattr(params, "pretrain_encoding") else False
 
         # compute the downscaled image size
@@ -740,7 +746,7 @@ class SphericalFourierNeuralOperatorNet(Module):
             # self.pos_embed = nn.Parameter( torch.zeros(1, self.embed_dim, self.img_shape_eff[0], self.img_shape_eff[1]) )
             self.pos_embed.is_shared_mp = ["matmul"]
             logging.info("Starting setting position embedding weights")
-            trunc_normal_(self.pos_embed, std=0.02, inplace_erfinv=pos_embed_inplace_erfinv)
+            trunc_normal_(self.pos_embed, std=0.02, inplace_erfinv=self.pos_embed_inplace_erfinv)
             logging.info("Finished setting position embedding weights")
 
         self.apply(self._init_weights)
