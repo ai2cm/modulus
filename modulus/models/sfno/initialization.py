@@ -44,16 +44,16 @@ def _no_grad_trunc_normal_(tensor, mean, std, a, b, inplace_erfinv=True):
         # [2l-1, 2u-1].
         tensor.uniform_(2 * l - 1, 2 * u - 1)
         logging.info("finished tensor.uniform_")
-        # Use inverse cdf transform for normal distribution to get truncated
-        # standard normal
-        if inplace_erfinv:
-            logging.info("starting tensor.erfinv_()")
-            tensor.erfinv_()
-            logging.info("finished tensor.erfinv_()")
-        else:
-            logging.info("starting tensor = torch.erfinv()")
-            tensor = torch.erfinv(tensor)
-            logging.info("finished tensor = torch.erfinv()")
+        # # Use inverse cdf transform for normal distribution to get truncated
+        # # standard normal
+        # if inplace_erfinv:
+        #     logging.info("starting tensor.erfinv_()")
+        #     tensor.erfinv_()
+        #     logging.info("finished tensor.erfinv_()")
+        # else:
+        #     logging.info("starting tensor = torch.erfinv()")
+        #     tensor = torch.erfinv(tensor)
+        #     logging.info("finished tensor = torch.erfinv()")
 
         # Transform to proper mean, std
         tensor.mul_(std * math.sqrt(2.0))
