@@ -412,6 +412,7 @@ class SphericalFourierNeuralOperatorNet(Module):
         complex_activation: str = "real",
         spectral_layers: int = 3,
         checkpointing: int = 0,
+        pos_embed_inplace_erfinv: bool = True,
     ):
         logging.info("Initializing Spherical Fourier Neural Operator Network")
         super(SphericalFourierNeuralOperatorNet, self).__init__(meta=MetaData())
@@ -739,7 +740,7 @@ class SphericalFourierNeuralOperatorNet(Module):
             # self.pos_embed = nn.Parameter( torch.zeros(1, self.embed_dim, self.img_shape_eff[0], self.img_shape_eff[1]) )
             self.pos_embed.is_shared_mp = ["matmul"]
             logging.info("Starting setting position embedding weights")
-            trunc_normal_(self.pos_embed, std=0.02, inplace_erfinv=False)
+            trunc_normal_(self.pos_embed, std=0.02, inplace_erfinv=pos_embed_inplace_erfinv)
             logging.info("Finished setting position embedding weights")
 
         self.apply(self._init_weights)
