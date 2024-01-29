@@ -27,13 +27,13 @@ tl.set_backend("pytorch")
 from tltorch.factorized_tensors.core import FactorizedTensor
 
 # import convenience functions for factorized tensors
-from modulus.models.sfno.activations import ComplexReLU
-from modulus.models.sfno.contractions import compl_muladd2d_fwd, compl_mul2d_fwd
-from modulus.models.sfno.contractions import _contract_localconv_fwd
-from modulus.models.sfno.factorizations import get_contract_fun
+from ai2modulus.models.sfno.activations import ComplexReLU
+from ai2modulus.models.sfno.contractions import compl_muladd2d_fwd, compl_mul2d_fwd
+from ai2modulus.models.sfno.contractions import _contract_localconv_fwd
+from ai2modulus.models.sfno.factorizations import get_contract_fun
 
 # for the experimental module
-from modulus.models.sfno.contractions import (
+from ai2modulus.models.sfno.contractions import (
     compl_exp_muladd2d_fwd,
     compl_exp_mul2d_fwd,
     real_mul2d_fwd,

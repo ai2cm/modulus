@@ -36,7 +36,7 @@ import math
 from typing import Union, List, Any
 from dataclasses import dataclass
 
-import modulus
+import ai2modulus
 from ..meta import ModelMetaData
 from ..module import Module
 

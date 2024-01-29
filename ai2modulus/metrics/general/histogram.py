@@ -17,7 +17,7 @@ import torch
 import numpy
 import torch.distributed as dist
 from typing import Union, Tuple
-from modulus.distributed.manager import DistributedManager
+from ai2modulus.distributed.manager import DistributedManager
 from .ensemble_metrics import EnsembleMetrics
 
 Tensor = torch.Tensor

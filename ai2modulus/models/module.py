@@ -17,7 +17,7 @@ import logging
 
 from typing import Union
 from pathlib import Path
-from modulus.models.meta import ModelMetaData
+from ai2modulus.models.meta import ModelMetaData
 
 
 class Module(torch.nn.Module):

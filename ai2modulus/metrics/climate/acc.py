@@ -15,7 +15,7 @@
 # TODO(Dallas) Introduce Distributed Class for computation.
 
 import torch
-from modulus.metrics.climate.reduction import _compute_lat_weights
+from ai2modulus.metrics.climate.reduction import _compute_lat_weights
 
 Tensor = torch.Tensor
 

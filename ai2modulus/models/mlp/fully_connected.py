@@ -14,12 +14,12 @@
 
 import torch
 import torch.nn as nn
-import modulus
+import ai2modulus
 
 from torch import Tensor
 from dataclasses import dataclass
 from typing import Optional, Union, List
-from modulus.models.layers import FCLayer
+from ai2modulus.models.layers import FCLayer
 from ..meta import ModelMetaData
 from ..module import Module
 

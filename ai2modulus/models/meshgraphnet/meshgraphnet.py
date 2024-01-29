@@ -15,7 +15,7 @@
 import torch
 from torch import Tensor
 import torch.nn as nn
-import modulus
+import ai2modulus
 
 try:
     import dgl
@@ -29,13 +29,13 @@ except:
 from typing import Union, List
 from dataclasses import dataclass
 
-from modulus.models.meta import ModelMetaData
-from modulus.models.module import Module
+from ai2modulus.models.meta import ModelMetaData
+from ai2modulus.models.module import Module
 
-from modulus.models.gnn_layers.utils import CuGraphCSC
-from modulus.models.gnn_layers.mesh_graph_mlp import MeshGraphMLP
-from modulus.models.gnn_layers.mesh_edge_block import MeshEdgeBlock
-from modulus.models.gnn_layers.mesh_node_block import MeshNodeBlock
+from ai2modulus.models.gnn_layers.utils import CuGraphCSC
+from ai2modulus.models.gnn_layers.mesh_graph_mlp import MeshGraphMLP
+from ai2modulus.models.gnn_layers.mesh_edge_block import MeshEdgeBlock
+from ai2modulus.models.gnn_layers.mesh_node_block import MeshNodeBlock
 
 
 @dataclass

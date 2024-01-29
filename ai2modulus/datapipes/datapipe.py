@@ -17,7 +17,7 @@ import logging
 
 from typing import Union
 from pathlib import Path
-from modulus.datapipes.meta import DatapipeMetaData
+from ai2modulus.datapipes.meta import DatapipeMetaData
 
 
 class Datapipe:

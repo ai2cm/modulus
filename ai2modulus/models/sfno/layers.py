@@ -21,9 +21,9 @@ from torch.cuda import amp
 import math
 
 from torch_harmonics import *
-from modulus.models.sfno.contractions import *
-from modulus.models.sfno.activations import *
-from modulus.models.sfno.initialization import trunc_normal_
+from ai2modulus.models.sfno.contractions import *
+from ai2modulus.models.sfno.activations import *
+from ai2modulus.models.sfno.initialization import trunc_normal_
 
 
 @torch.jit.script

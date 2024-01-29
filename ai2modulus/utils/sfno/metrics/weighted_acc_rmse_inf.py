@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import numpy as np
-from modulus.utils.sfno import logging_utils
+from ai2modulus.utils.sfno import logging_utils
 
 logging_utils.config_logger()
 import torch

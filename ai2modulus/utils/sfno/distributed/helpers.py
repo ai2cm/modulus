@@ -18,7 +18,7 @@ import torch
 import torch.nn.functional as F
 import torch.distributed as dist
 
-from modulus.utils.sfno.distributed import comm
+from ai2modulus.utils.sfno.distributed import comm
 
 from torch._utils import _flatten_dense_tensors
 

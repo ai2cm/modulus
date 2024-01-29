@@ -15,7 +15,7 @@
 import torch
 
 # we need those here:
-from modulus.utils.sfno.metrics.weighted_acc_rmse import (
+from ai2modulus.utils.sfno.metrics.weighted_acc_rmse import (
     Quadrature,
     lat_torch,
     latitude_weighting_factor_torch,
@@ -28,9 +28,9 @@ from modulus.utils.sfno.metrics.weighted_acc_rmse import (
 )
 
 # distributed computing stuff
-from modulus.utils.sfno.distributed import comm
+from ai2modulus.utils.sfno.distributed import comm
 import torch.distributed as dist
-from modulus.utils.sfno.distributed.mappings import gather_from_parallel_region
+from ai2modulus.utils.sfno.distributed.mappings import gather_from_parallel_region
 
 
 class MetricsHandler:

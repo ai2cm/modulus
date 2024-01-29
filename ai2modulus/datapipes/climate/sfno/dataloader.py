@@ -20,7 +20,7 @@ from torch.utils.data import DataLoader
 
 # distributed stuff
 import torch.distributed as dist
-from modulus.utils.sfno.distributed import comm
+from ai2modulus.utils.sfno.distributed import comm
 
 
 def init_distributed_io(params):  # pragma: no cover

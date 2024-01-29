@@ -29,7 +29,7 @@ import torch
 
 # we need this for the zenith angle feature
 import datetime
-from modulus.utils.sfno.zenith_angle import cos_zenith_angle
+from ai2modulus.utils.sfno.zenith_angle import cos_zenith_angle
 
 
 class GeneralES(object):

@@ -15,21 +15,21 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from modulus.utils.sfno.distributed import comm
+from ai2modulus.utils.sfno.distributed import comm
 
 # matmul parallel
-from modulus.utils.sfno.distributed.mappings import copy_to_matmul_parallel_region
-from modulus.utils.sfno.distributed.mappings import reduce_from_matmul_parallel_region
-from modulus.utils.sfno.distributed.mappings import scatter_to_matmul_parallel_region
-from modulus.utils.sfno.distributed.mappings import gather_from_matmul_parallel_region
+from ai2modulus.utils.sfno.distributed.mappings import copy_to_matmul_parallel_region
+from ai2modulus.utils.sfno.distributed.mappings import reduce_from_matmul_parallel_region
+from ai2modulus.utils.sfno.distributed.mappings import scatter_to_matmul_parallel_region
+from ai2modulus.utils.sfno.distributed.mappings import gather_from_matmul_parallel_region
 
 # spatial parallel
-from modulus.utils.sfno.distributed.mappings import gather_from_spatial_parallel_region
-from modulus.utils.sfno.distributed.mappings import scatter_to_spatial_parallel_region
+from ai2modulus.utils.sfno.distributed.mappings import gather_from_spatial_parallel_region
+from ai2modulus.utils.sfno.distributed.mappings import scatter_to_spatial_parallel_region
 
-from modulus.utils.sfno.distributed.helpers import _transpose
+from ai2modulus.utils.sfno.distributed.helpers import _transpose
 
-from modulus.models.sfno.initialization import trunc_normal_
+from ai2modulus.models.sfno.initialization import trunc_normal_
 
 
 class distributed_transpose_w(torch.autograd.Function):

@@ -15,7 +15,7 @@
 import torch
 from torch import Tensor
 from abc import ABC
-from modulus.metrics.general.reduction import WeightedMean, WeightedVariance
+from ai2modulus.metrics.general.reduction import WeightedMean, WeightedVariance
 
 
 def _compute_lat_weights(lat: Tensor) -> Tensor:

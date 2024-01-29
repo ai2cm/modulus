@@ -20,8 +20,8 @@ from torch.cuda import amp
 from typing import Tuple
 
 # for spatial model-parallelism
-from modulus.utils.sfno.distributed import comm
-from modulus.utils.sfno.distributed.mappings import (
+from ai2modulus.utils.sfno.distributed import comm
+from ai2modulus.utils.sfno.distributed.mappings import (
     gather_from_parallel_region,
     copy_to_spatial_parallel_region,
 )

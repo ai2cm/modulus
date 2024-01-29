@@ -14,7 +14,7 @@
 
 import torch
 import numpy as np
-from modulus.metrics.general.histogram import histogram, linspace
+from ai2modulus.metrics.general.histogram import histogram, linspace
 from typing import Union
 
 Tensor = torch.Tensor

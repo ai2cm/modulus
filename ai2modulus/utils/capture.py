@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import functools
-import modulus
+import ai2modulus
 import torch
 import logging
 from logging import Logger

@@ -58,7 +58,7 @@ import torch.nn as nn
 from typing import Union, List
 from dataclasses import dataclass
 
-import modulus
+import ai2modulus
 from ..meta import ModelMetaData
 from ..module import Module
 

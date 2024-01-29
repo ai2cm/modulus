@@ -15,8 +15,8 @@
 # TODO(Dallas) Introduce Distributed Class for computation.
 
 import torch
-from modulus.metrics.general.histogram import normal_pdf, normal_cdf, histogram
-from modulus.metrics.general.entropy import _entropy_from_counts
+from ai2modulus.metrics.general.histogram import normal_pdf, normal_cdf, histogram
+from ai2modulus.metrics.general.entropy import _entropy_from_counts
 
 Tensor = torch.Tensor
 

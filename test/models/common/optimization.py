@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import logging
-import modulus
+import ai2modulus
 import torch
 
 from typing import Tuple
@@ -27,7 +27,7 @@ logger = logging.getLogger("__name__")
 
 @torch.no_grad()
 def validate_jit(
-    model: modulus.Module,
+    model: ai2modulus.Module,
     in_args: Tuple[Tensor] = (),
     rtol: float = 1e-5,
     atol: float = 1e-5,
@@ -70,7 +70,7 @@ def validate_jit(
 
 
 def validate_cuda_graphs(
-    model: modulus.Module,
+    model: ai2modulus.Module,
     in_args: Tuple[Tensor] = (),
     rtol: float = 1e-5,
     atol: float = 1e-5,
@@ -130,7 +130,7 @@ def validate_cuda_graphs(
 
 
 def validate_amp(
-    model: modulus.Module,
+    model: ai2modulus.Module,
     in_args: Tuple[Tensor] = (),
     iterations: int = 3,
 ) -> bool:
@@ -194,7 +194,7 @@ def validate_torch_fx() -> bool:
 
 
 def validate_combo_optims(
-    model: modulus.Module,
+    model: ai2modulus.Module,
     in_args: Tuple[Tensor] = (),
     iterations: int = 2,
     warmup_length: int = 11,

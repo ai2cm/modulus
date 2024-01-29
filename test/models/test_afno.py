@@ -16,7 +16,7 @@ import torch
 import pytest
 import random
 
-from modulus.models.afno import AFNO
+from ai2modulus.models.afno import AFNO
 from . import common
 
 

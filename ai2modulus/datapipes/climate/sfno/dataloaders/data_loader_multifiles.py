@@ -20,7 +20,7 @@ from torch.utils.data import Dataset
 import h5py
 
 # import cv2
-from modulus.utils.sfno.img_utils import reshape_fields
+from ai2modulus.utils.sfno.img_utils import reshape_fields
 
 
 class MultifilesDataset(Dataset):

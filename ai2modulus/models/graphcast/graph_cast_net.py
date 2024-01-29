@@ -19,18 +19,18 @@ from torch import Tensor
 from typing import Any
 from dataclasses import dataclass
 
-from modulus.models.gnn_layers.utils import set_checkpoint_fn, CuGraphCSC
-from modulus.models.gnn_layers.embedder import (
+from ai2modulus.models.gnn_layers.utils import set_checkpoint_fn, CuGraphCSC
+from ai2modulus.models.gnn_layers.embedder import (
     GraphCastEncoderEmbedder,
     GraphCastDecoderEmbedder,
 )
-from modulus.models.gnn_layers.mesh_graph_encoder import MeshGraphEncoder
-from modulus.models.gnn_layers.mesh_graph_decoder import MeshGraphDecoder
-from modulus.models.gnn_layers.mesh_graph_mlp import MeshGraphMLP
-from modulus.models.module import Module
-from modulus.models.meta import ModelMetaData
-from modulus.utils.graphcast.graph import Graph
-from modulus.utils.graphcast.data_utils import StaticData
+from ai2modulus.models.gnn_layers.mesh_graph_encoder import MeshGraphEncoder
+from ai2modulus.models.gnn_layers.mesh_graph_decoder import MeshGraphDecoder
+from ai2modulus.models.gnn_layers.mesh_graph_mlp import MeshGraphMLP
+from ai2modulus.models.module import Module
+from ai2modulus.models.meta import ModelMetaData
+from ai2modulus.utils.graphcast.graph import Graph
+from ai2modulus.utils.graphcast.data_utils import StaticData
 
 from .graph_cast_processor import GraphCastProcessor
 

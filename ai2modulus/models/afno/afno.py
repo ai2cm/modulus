@@ -15,8 +15,8 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import modulus
-import modulus.models.layers.fft as fft
+import ai2modulus
+import ai2modulus.models.layers.fft as fft
 
 from functools import partial
 from typing import Tuple, Any

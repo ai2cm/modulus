@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import logging
-import modulus
+import ai2modulus
 import torch
 import sys
 

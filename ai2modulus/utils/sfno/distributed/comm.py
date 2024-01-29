@@ -14,7 +14,7 @@
 
 import os
 import logging
-from modulus.utils.sfno.logging_utils import disable_logging
+from ai2modulus.utils.sfno.logging_utils import disable_logging
 import math
 import torch
 import torch.distributed as dist

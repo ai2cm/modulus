@@ -16,7 +16,7 @@ import torch
 import numpy as np
 
 # distributed stuff
-from modulus.utils.sfno.distributed import comm
+from ai2modulus.utils.sfno.distributed import comm
 
 # DALI stuff
 from nvidia.dali.pipeline import Pipeline
@@ -25,7 +25,7 @@ import nvidia.dali.types as dali_types
 from nvidia.dali.plugin.pytorch import DALIGenericIterator, LastBatchPolicy
 
 # es helper
-import modulus.datapipes.climate.sfno.dataloaders.dali_es_helper_2d as esh
+import ai2modulus.datapipes.climate.sfno.dataloaders.dali_es_helper_2d as esh
 
 
 class ERA5DaliESDataloader(object):

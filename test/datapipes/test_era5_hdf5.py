@@ -16,7 +16,7 @@ import pytest
 import torch
 
 from typing import Tuple
-from modulus.datapipes.climate import ERA5HDF5Datapipe
+from ai2modulus.datapipes.climate import ERA5HDF5Datapipe
 from . import common
 
 Tensor = torch.Tensor

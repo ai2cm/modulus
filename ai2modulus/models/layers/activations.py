@@ -14,7 +14,7 @@
 
 import torch
 import torch.nn as nn
-import modulus
+import ai2modulus
 
 Tensor = torch.Tensor
 

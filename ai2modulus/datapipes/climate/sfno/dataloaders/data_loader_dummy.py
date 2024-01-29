@@ -19,7 +19,7 @@ import numpy as np
 import h5py
 
 # distributed stuff
-from modulus.utils.sfno.distributed import comm
+from ai2modulus.utils.sfno.distributed import comm
 
 
 class DummyLoader(object):

@@ -20,7 +20,7 @@ tl.set_backend("pytorch")
 # from tensorly.plugins import use_opt_einsum
 # use_opt_einsum('optimal')
 
-from modulus.models.sfno.contractions import (
+from ai2modulus.models.sfno.contractions import (
     _contract_diagonal,
     _contract_dhconv,
     _contract_sep_diagonal,

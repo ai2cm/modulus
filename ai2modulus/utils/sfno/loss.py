@@ -18,8 +18,8 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 
-from modulus.utils.sfno.distributed import comm
-from modulus.utils.sfno.distributed.mappings import gather_from_parallel_region
+from ai2modulus.utils.sfno.distributed import comm
+from ai2modulus.utils.sfno.distributed.mappings import gather_from_parallel_region
 
 import torch_harmonics as harmonics
 

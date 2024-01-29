@@ -15,7 +15,7 @@
 import logging
 from io import StringIO
 from contextlib import redirect_stdout
-from modulus.utils.sfno.logging_utils import config_logger, disable_logging
+from ai2modulus.utils.sfno.logging_utils import config_logger, disable_logging
 
 
 def test_disable_logging():

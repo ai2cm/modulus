@@ -22,7 +22,7 @@ from torch import Tensor
 from torch.autograd.function import once_differentiable
 
 from .utils import concat_efeat, sum_efeat, CuGraphCSC
-from modulus.models.layers.fused_silu import silu_backward_for
+from ai2modulus.models.layers.fused_silu import silu_backward_for
 
 try:
     from apex.normalization import FusedLayerNorm

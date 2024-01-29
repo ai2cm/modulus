@@ -14,14 +14,14 @@
 
 import torch
 import torch.nn as nn
-import modulus
+import ai2modulus
 
 from torch import Tensor
 from dataclasses import dataclass
 from typing import Union, List
-from modulus.models.meta import ModelMetaData
-from modulus.models.module import Module
-from modulus.models.rnn.layers import (
+from ai2modulus.models.meta import ModelMetaData
+from ai2modulus.models.module import Module
+from ai2modulus.models.rnn.layers import (
     _ConvLayer,
     _TransposeConvLayer,
     _ConvGRULayer,

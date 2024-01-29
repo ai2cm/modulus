@@ -20,26 +20,26 @@ from dataclasses import dataclass
 from typing import Any, Tuple
 
 # helpers
-from modulus.models.sfno.layers import trunc_normal_, DropPath, MLP
+from ai2modulus.models.sfno.layers import trunc_normal_, DropPath, MLP
 
 # import global convolution and non-linear spectral layers
-from modulus.models.sfno.layers import SpectralAttention2d
-from modulus.models.sfno.s2convolutions import SpectralConvS2, SpectralAttentionS2
+from ai2modulus.models.sfno.layers import SpectralAttention2d
+from ai2modulus.models.sfno.s2convolutions import SpectralConvS2, SpectralAttentionS2
 
 # get spectral transforms from torch_harmonics
 import torch_harmonics as th
 import torch_harmonics.distributed as thd
 
 # wrap fft, to unify interface to spectral transforms
-from modulus.models.sfno.layers import RealFFT2
-from modulus.utils.sfno.distributed.layers import (
+from ai2modulus.models.sfno.layers import RealFFT2
+from ai2modulus.utils.sfno.distributed.layers import (
     DistributedRealFFT2,
     DistributedInverseRealFFT2,
     DistributedMLP,
 )
 
 # more distributed stuff
-from modulus.utils.sfno.distributed import comm
+from ai2modulus.utils.sfno.distributed import comm
 
 # layer normalization
 try:
@@ -47,10 +47,10 @@ try:
     apex_imported = True
 except ImportError:
     apex_imported = False
-from modulus.utils.sfno.distributed.layer_norm import DistributedInstanceNorm2d
+from ai2modulus.utils.sfno.distributed.layer_norm import DistributedInstanceNorm2d
 
-from modulus.models.module import Module
-from modulus.models.meta import ModelMetaData
+from ai2modulus.models.module import Module
+from ai2modulus.models.meta import ModelMetaData
 
 
 @dataclass

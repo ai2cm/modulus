@@ -19,15 +19,15 @@
 import torch
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel
-from modulus.utils.sfno.distributed import comm
+from ai2modulus.utils.sfno.distributed import comm
 
 # torch utils
 from torch._utils import _flatten_dense_tensors, _unflatten_dense_tensors
 
 # helper functions
-from modulus.utils.sfno.distributed.helpers import _reduce
-from modulus.utils.sfno.distributed.helpers import _split
-from modulus.utils.sfno.distributed.helpers import _gather
+from ai2modulus.utils.sfno.distributed.helpers import _reduce
+from ai2modulus.utils.sfno.distributed.helpers import _split
+from ai2modulus.utils.sfno.distributed.helpers import _gather
 
 # generalized
 class _CopyToParallelRegion(torch.autograd.Function):

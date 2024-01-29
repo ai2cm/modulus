@@ -16,7 +16,7 @@ import torch
 import torch.distributed as dist
 from typing import Union, Tuple, List
 from abc import ABC, abstractmethod
-from modulus.distributed.manager import DistributedManager
+from ai2modulus.distributed.manager import DistributedManager
 from warnings import warn
 
 Tensor = torch.Tensor

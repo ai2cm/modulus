@@ -14,7 +14,7 @@
 
 import torch
 
-from modulus.utils.graphcast.loss import (
+from ai2modulus.utils.graphcast.loss import (
     CustomCellAreaWeightedLossFunction,
     CellAreaWeightedLossFunction,
 )
