@@ -40,7 +40,7 @@ def validate_jit(
 
     Parameters
     ----------
-    model : modulus.Module
+    model : ai2modulus.Module
         Modulus module
     in_args : Tuple[Tensor], optional
         Input arguments, by default ()
@@ -84,7 +84,7 @@ def validate_cuda_graphs(
 
     Parameters
     ----------
-    model : modulus.Module
+    model : ai2modulus.Module
         Modulus module
     in_args : Tuple[Tensor], optional
         Input arguments, keywords not supported, by default ()
@@ -140,7 +140,7 @@ def validate_amp(
 
     Parameters
     ----------
-    model : modulus.Module
+    model : ai2modulus.Module
         Modulus module
     in_args : Tuple[Tensor], optional
         Input arguments, keywords not supported, by default ()
@@ -207,7 +207,7 @@ def validate_combo_optims(
 
     Parameters
      ----------
-     model : modulus.Module
+     model : ai2modulus.Module
          Modulus module
      in_args : Tuple[Tensor], optional
          Input arguments, keywords not supported, by default ()

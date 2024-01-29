@@ -59,7 +59,7 @@ def validate_onnx_export(
 
     Parameters
     ----------
-    model_1 : modulus.Module
+    model_1 : ai2modulus.Module
         Modulus model to save checkpoint from
     in_args : Tuple[Tensor], optional
         Input arguments, by default ()
@@ -125,7 +125,7 @@ def validate_onnx_runtime(
 
     Parameters
     ----------
-    model_1 : modulus.Module
+    model_1 : ai2modulus.Module
         Modulus model to save checkpoint from
     in_args : Tuple[Tensor], optional
         Input arguments, by default ()

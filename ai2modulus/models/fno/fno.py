@@ -15,7 +15,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import ai2modulus.models.layers as layers
+import ai2ai2modulus.models.layers as layers
 import ai2modulus
 
 from typing import Dict, List, Union, Tuple
@@ -485,7 +485,7 @@ class FNO(Module):
 
     Parameters
     ----------
-    decoder_net : modulus.Module
+    decoder_net : ai2modulus.Module
         Pointwise decoder network, input feature size should match `latent_channels`
     in_channels : int
         Number of input channels
@@ -509,14 +509,14 @@ class FNO(Module):
     Example
     -------
     >>> # define the decoder net
-    >>> decoder = modulus.models.mlp.FullyConnected(
+    >>> decoder = ai2modulus.models.mlp.FullyConnected(
     ...     in_features=32,
     ...     out_features=3,
     ...     num_layers=2,
     ...     layer_size=16,
     ... )
     >>> # define the 2d FNO model
-    >>> model = modulus.models.fno.FNO(
+    >>> model = ai2modulus.models.fno.FNO(
     ...     decoder_net=decoder,
     ...     in_channels=4,
     ...     dimension=2,
