@@ -22,7 +22,7 @@ import pytest
 import torch
 
 from utils import fix_random_seeds
-from modulus.models.sfno.sfnonet import SphericalFourierNeuralOperatorNet
+from ai2modulus.models.sfno.sfnonet import SphericalFourierNeuralOperatorNet
 
 
 @pytest.mark.parametrize("device", ["cuda:0", "cpu"])

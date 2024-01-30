@@ -15,7 +15,7 @@
 import os
 import torch
 import numpy as np
-from modulus.utils.sfno.img_utils import PeriodicPad2d, reshape_fields
+from ai2modulus.utils.sfno.img_utils import PeriodicPad2d, reshape_fields
 
 
 def test_PeriodicPad2d():

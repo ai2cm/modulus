@@ -16,7 +16,7 @@ import torch
 from torch import nn
 from torch.optim import lr_scheduler as lrs
 
-from modulus.utils.sfno.warmup_scheduler import WarmupScheduler
+from ai2modulus.utils.sfno.warmup_scheduler import WarmupScheduler
 
 
 def test_warmup_scheduler():

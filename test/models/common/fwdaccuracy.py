@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import logging
-import modulus
+import ai2modulus
 import torch
 import sys
 
@@ -66,7 +66,7 @@ def save_output(output: Union[Tensor, Tuple[Tensor, ...]], file_name: Path):
 
 @torch.no_grad()
 def validate_forward_accuracy(
-    model: modulus.Module,
+    model: ai2modulus.Module,
     in_args: Tuple[Tensor] = (),
     rtol: float = 1e-3,
     atol: float = 1e-3,
@@ -81,7 +81,7 @@ def validate_forward_accuracy(
 
     Parameters
     ----------
-    model : modulus.Module
+    model : ai2modulus.Module
         Modulus module
     in_args : Tuple[Tensor], optional
         Input arguments, by default ()

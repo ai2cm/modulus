@@ -23,8 +23,8 @@ except:
     ort = None
 
 from pathlib import Path
-from modulus.models.mlp import FullyConnected
-from modulus.deploy.onnx import export_to_onnx_stream, run_onnx_inference
+from ai2modulus.models.mlp import FullyConnected
+from ai2modulus.deploy.onnx import export_to_onnx_stream, run_onnx_inference
 
 Tensor = torch.Tensor
 logger = logging.getLogger("__name__")

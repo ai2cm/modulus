@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os
-from modulus.distributed import DistributedManager
+from ai2modulus.distributed import DistributedManager
 
 # TODO: Need to figure out how to test parallel set up
 def test_manager():

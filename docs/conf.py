@@ -21,7 +21,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 import os
 import sphinx_rtd_theme
-from modulus import __version__ as version
+from ai2modulus import __version__ as version
 
 project = "NVIDIA Modulus"
 copyright = "2023, NVIDIA Modulus Team"

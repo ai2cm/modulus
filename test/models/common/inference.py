@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import logging
-import modulus
+import ai2modulus
 import torch
 import onnx
 import pytest
@@ -25,7 +25,7 @@ except:
 
 from typing import Tuple
 from pathlib import Path
-from modulus.deploy.onnx import export_to_onnx_stream, run_onnx_inference
+from ai2modulus.deploy.onnx import export_to_onnx_stream, run_onnx_inference
 from .utils import compare_output
 
 Tensor = torch.Tensor
@@ -50,7 +50,7 @@ def check_ort_version():
 
 @torch.no_grad()
 def validate_onnx_export(
-    model: modulus.Module,
+    model: ai2modulus.Module,
     in_args: Tuple[Tensor] = (),
 ) -> bool:
     """Check network's ONNX export works
@@ -59,7 +59,7 @@ def validate_onnx_export(
 
     Parameters
     ----------
-    model_1 : modulus.Module
+    model_1 : ai2modulus.Module
         Modulus model to save checkpoint from
     in_args : Tuple[Tensor], optional
         Input arguments, by default ()
@@ -111,7 +111,7 @@ def validate_onnx_export(
 
 @torch.no_grad()
 def validate_onnx_runtime(
-    model: modulus.Module,
+    model: ai2modulus.Module,
     in_args: Tuple[Tensor, ...] = (),
     rtol: float = 1e-3,
     atol: float = 1e-3,
@@ -125,7 +125,7 @@ def validate_onnx_runtime(
 
     Parameters
     ----------
-    model_1 : modulus.Module
+    model_1 : ai2modulus.Module
         Modulus model to save checkpoint from
     in_args : Tuple[Tensor], optional
         Input arguments, by default ()
