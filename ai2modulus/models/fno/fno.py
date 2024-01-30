@@ -15,8 +15,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import ai2ai2modulus.models.layers as layers
-import ai2modulus
+import ai2modulus.models.layers as layers
 
 from typing import Dict, List, Union, Tuple
 from torch import Tensor
