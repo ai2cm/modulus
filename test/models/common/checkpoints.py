@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import logging
-import ai2modulus
+import modulus
 import torch
 
 from typing import Tuple
@@ -26,8 +26,8 @@ logger = logging.getLogger("__name__")
 
 @torch.no_grad()
 def validate_checkpoint(
-    model_1: ai2modulus.Module,
-    model_2: ai2modulus.Module,
+    model_1: modulus.Module,
+    model_2: modulus.Module,
     in_args: Tuple[Tensor] = (),
     rtol: float = 1e-5,
     atol: float = 1e-5,
@@ -40,10 +40,10 @@ def validate_checkpoint(
 
     Parameters
     ----------
-    model_1 : ai2modulus.Module
-        ai2modulus model to save checkpoint from
-    model_2 : ai2modulus.Module
-        ai2modulus model to load checkpoint to
+    model_1 : modulus.Module
+        Modulus model to save checkpoint from
+    model_2 : modulus.Module
+        Modulus model to load checkpoint to
     in_args : Tuple[Tensor], optional
         Input arguments, by default ()
     rtol : float, optional

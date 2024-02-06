@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import ai2modulus
+import modulus
 
 import torch
 import logging
@@ -56,7 +56,7 @@ class MiniNetwork(torch.nn.Module):
 
 
 def check_cuda_graphs(
-    datapipe: ai2modulus.Datapipe,
+    datapipe: modulus.Datapipe,
     input_fn: Union[Callable, None] = None,
     iterations: int = 5,
     warmup_length: int = 3,
@@ -65,8 +65,8 @@ def check_cuda_graphs(
 
     Parameters
     ----------
-    datapipe : ai2modulus.Datapipe
-        ai2modulus data pipe to test
+    datapipe : modulus.Datapipe
+        Modulus data pipe to test
     input_fn : Union[Callable, None], optional
         Input pre-processing function to produce a tuple of tensors for model inputs, by default None
     iterations : int, optional

@@ -15,13 +15,13 @@
 import pytest
 import torch
 import numpy as np
-from ai2modulus.metrics.general.mse import mse, rmse
-from ai2modulus.metrics.climate.acc import acc
-import ai2modulus.metrics.climate.reduction as clim_red
-import ai2modulus.metrics.climate.efi as efi
+from modulus.metrics.general.mse import mse, rmse
+from modulus.metrics.climate.acc import acc
+import modulus.metrics.climate.reduction as clim_red
+import modulus.metrics.climate.efi as efi
 
-import ai2modulus.metrics.general.reduction as gen_red
-import ai2modulus.metrics.general.histogram as hist
+import modulus.metrics.general.reduction as gen_red
+import modulus.metrics.general.histogram as hist
 
 Tensor = torch.Tensor
 

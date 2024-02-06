@@ -23,7 +23,7 @@ from utils import fix_random_seeds, create_random_input
 
 import common
 from utils import get_icosphere_path
-from ai2modulus.models.graphcast.graph_cast_net import GraphCastNet
+from modulus.models.graphcast.graph_cast_net import GraphCastNet
 
 icosphere_path = get_icosphere_path()
 

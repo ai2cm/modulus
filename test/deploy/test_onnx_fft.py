@@ -19,7 +19,7 @@ import torch.fft
 import torch.nn as nn
 import torch.onnx
 import torch.onnx.utils
-import ai2modulus.models.layers.fft as fft
+import modulus.models.layers.fft as fft
 
 try:
     import onnxruntime as ort
@@ -27,7 +27,7 @@ except:
     ort = None
 
 from typing import Tuple
-from ai2modulus.deploy.onnx import export_to_onnx_stream, run_onnx_inference
+from modulus.deploy.onnx import export_to_onnx_stream, run_onnx_inference
 
 Tensor = torch.Tensor
 logger = logging.getLogger("__name__")

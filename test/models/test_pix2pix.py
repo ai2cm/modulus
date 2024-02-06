@@ -16,7 +16,7 @@ import torch
 import pytest
 import random
 
-from ai2modulus.models.pix2pix import Pix2Pix
+from modulus.models.pix2pix import Pix2Pix
 from . import common
 
 

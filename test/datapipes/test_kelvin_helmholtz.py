@@ -16,7 +16,7 @@ import pytest
 import torch
 
 from typing import Tuple
-from ai2modulus.datapipes.benchmarks.kelvin_helmholtz import KelvinHelmholtz2D
+from modulus.datapipes.benchmarks.kelvin_helmholtz import KelvinHelmholtz2D
 from . import common
 
 Tensor = torch.Tensor

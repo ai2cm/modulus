@@ -18,14 +18,14 @@ import torch.distributed as dist
 import numpy as np
 import os
 
-import ai2modulus.metrics.general.histogram as hist
-import ai2modulus.metrics.general.ensemble_metrics as em
-import ai2modulus.metrics.general.crps as crps
-import ai2modulus.metrics.general.wasserstein as w
-import ai2modulus.metrics.general.calibration as cal
-import ai2modulus.metrics.general.entropy as ent
+import modulus.metrics.general.histogram as hist
+import modulus.metrics.general.ensemble_metrics as em
+import modulus.metrics.general.crps as crps
+import modulus.metrics.general.wasserstein as w
+import modulus.metrics.general.calibration as cal
+import modulus.metrics.general.entropy as ent
 
-from ai2modulus.distributed.manager import DistributedManager
+from modulus.distributed.manager import DistributedManager
 
 Tensor = torch.Tensor
 
