@@ -101,7 +101,7 @@ class AI2SpectralConvS2(nn.Module):
             scale * torch.randn(in_channels, out_channels, basis_size, 2)
         )
         self.w2 = nn.Parameter(
-            (2 * torch.rand(basis_size, self.modes_lat_local, 2) - 0.5) / (basis_size ** 0.5)
+            (2 * torch.rand(basis_size, self.modes_lat_local) - 0.5) / (basis_size ** 0.5)
         )
         self.w3 = nn.Parameter(
             torch.zeros(self.modes_lat_local, 2)
@@ -160,11 +160,11 @@ def _contract_ai2_dhconv(
         w3: scale factor weights, shape [modes_lat] (complex)
     """
     ac = torch.view_as_complex(a)
-    w1c = torch.view_as_complex(w1)
-    w2c = torch.view_as_complex(w2)
+    w = torch.einsum("iowc,wx->ioxc", w1, w2).contiguous()
+    wc = torch.view_as_complex(w)
     w3c = torch.view_as_complex(w3)
     # resc = torch.einsum("bixy,iox->boxy", ac, w1c)
-    resc = torch.einsum("bixy,ioc,cx,x->boxy", ac, w1c, w2c, w3c)
+    resc = torch.einsum("bixy,iox,x->boxy", ac, wc, w3c)
     return resc
 
 
