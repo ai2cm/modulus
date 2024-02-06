@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import torch
+import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -100,8 +101,12 @@ class AI2SpectralConvS2(nn.Module):
             # scale * torch.randn(in_channels, out_channels, self.modes_lat_local, 2)
             scale * torch.randn(in_channels, out_channels, basis_size, 2)
         )
+        w2_data = np.zeros([basis_size, self.modes_lat_local], dtype=np.float32)
+        modes_per_basis = self.modes_lat_local / basis_size
+        for i in range(basis_size):
+            w2_data[int(i*modes_per_basis):int((i+1)*modes_per_basis), i] = 1.0 / (modes_per_basis ** 0.5)
         self.w2 = nn.Parameter(
-            (2 * torch.rand(basis_size, self.modes_lat_local) - 0.5) / (basis_size ** 0.5)
+            torch.as_tensor(w2_data)
         )
         self.w3 = nn.Parameter(
             torch.zeros(self.modes_lat_local, 2)
