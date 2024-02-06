@@ -44,6 +44,127 @@ import torch_harmonics as th
 import torch_harmonics.distributed as thd
 
 
+class AI2SpectralConvS2(nn.Module):
+    """
+    Spectral Convolution according to Driscoll & Healy. Designed for convolutions on
+    the two-sphere S2 using the Spherical Harmonic Transforms in torch-harmonics, but
+    supports convolutions on the periodic domain via the RealFFT2 and InverseRealFFT2
+    wrappers.
+    """
+
+    def __init__(
+        self,
+        forward_transform,
+        inverse_transform,
+        in_channels,
+        out_channels,
+        rank: float,
+        scale="auto",
+        bias=False,
+    ):  # pragma: no cover
+        super(SpectralConvS2, self).__init__()
+
+        if scale == "auto":
+            scale = 1 / (in_channels * out_channels)
+
+        self.forward_transform = forward_transform
+        self.inverse_transform = inverse_transform
+
+        self.modes_lat = self.inverse_transform.lmax
+        self.modes_lon = self.inverse_transform.mmax
+
+        self.scale_residual = (
+            (self.forward_transform.nlat != self.inverse_transform.nlat)
+            or (self.forward_transform.nlon != self.inverse_transform.nlon)
+            or (self.forward_transform.grid != self.inverse_transform.grid)
+        )
+
+        assert self.inverse_transform.lmax == self.modes_lat
+        assert self.inverse_transform.mmax == self.modes_lon
+
+
+        if isinstance(self.inverse_transform, thd.DistributedInverseRealSHT):
+            self.modes_lat_local = self.inverse_transform.lmax_local
+            self.modes_lon_local = self.inverse_transform.mmax_local
+            self.lpad_local = self.inverse_transform.lpad_local
+            self.mpad_local = self.inverse_transform.mpad_local
+        else:
+            self.modes_lat_local = self.modes_lat
+            self.modes_lon_local = self.modes_lon
+            self.lpad = 0
+            self.mpad = 0
+
+        basis_size = int(rank * self.modes_lat_local)
+
+        self.w1 = nn.Parameter(
+            scale * torch.randn(in_channels, out_channels, basis_size, 2))
+        self.w2 = nn.Parameter(
+            (2 * torch.rand(basis_size, self.modes_lat_local) - 0.5) / (basis_size ** 0.5)
+        )
+        self.w3 = nn.Parameter(
+            torch.zeros(self.modes_lat_local, 2)
+        )
+
+        if bias:
+            self.bias = nn.Parameter(scale * torch.zeros(1, out_channels, 1, 1))
+
+    def forward(self, x):  # pragma: no cover
+
+        dtype = x.dtype
+        residual = x
+        x = x.float()
+        B, C, H, W = x.shape
+
+        with amp.autocast(enabled=False):
+            x = self.forward_transform(x)
+            if self.scale_residual:
+                x = x.contiguous()
+                residual = self.inverse_transform(x)
+                residual = residual.to(dtype)
+
+        # approach with unpadded weights
+        xp = torch.zeros_like(x)
+        xp[..., : self.modes_lat_local, : self.modes_lon_local] = _contract_ai2_dhconv(
+            x[..., : self.modes_lat_local, : self.modes_lon_local],
+            self.w1,
+            self.w2,
+            self.w3
+        )
+        x = xp.contiguous()
+
+        with amp.autocast(enabled=False):
+            x = self.inverse_transform(x)
+
+        if hasattr(self, "bias"):
+            x = x + self.bias
+
+        x = x.type(dtype)
+
+        return x, residual
+
+
+@torch.jit.script
+def _contract_ai2_dhconv(
+    a: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, w3: torch.Tensor
+) -> torch.Tensor:  # pragma: no cover
+    """
+    Performs a complex Driscoll-Healy style convolution operation between two tensors
+    'a' and 'b'.
+
+    Args:
+        a: input tensor
+        w1: weight basis, shape [in_dim, out_dim, weight_decomp] (complex)
+        w2: weight amounts, shape [weight_decomp, modes_lat] (real)
+        w3: scale factor weights, shape [modes_lat] (complex)
+    """
+    ac = torch.view_as_complex(a)
+    w1c = torch.view_as_complex(w1)
+    w3c = torch.view_as_complex(w3)
+    resc = torch.einsum("bixy,ioc,cx,x->boxy", ac, w1c, w2, w3c)
+    res = torch.view_as_real(resc)
+    return res
+
+
 class SpectralConvS2(nn.Module):
     """
     Spectral Convolution according to Driscoll & Healy. Designed for convolutions on

@@ -24,7 +24,7 @@ from ai2modulus.models.sfno.layers import trunc_normal_, DropPath, MLP
 
 # import global convolution and non-linear spectral layers
 from ai2modulus.models.sfno.layers import SpectralAttention2d
-from ai2modulus.models.sfno.s2convolutions import SpectralConvS2, SpectralAttentionS2
+from ai2modulus.models.sfno.s2convolutions import AI2SpectralConvS2, SpectralConvS2, SpectralAttentionS2
 
 # get spectral transforms from torch_harmonics
 import torch_harmonics as th
@@ -141,6 +141,15 @@ class SpectralFilterLayer(nn.Module):
                 separable=separable,
                 bias=True,
                 use_tensorly=False if factorization is None else True,
+            )
+        elif filter_type == "ai2":
+            self.filter = AI2SpectralConvS2(
+                forward_transform,
+                inverse_transform,
+                embed_dim,
+                embed_dim,
+                rank=rank,
+                bias=True,
             )
 
         else:

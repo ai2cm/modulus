@@ -256,5 +256,5 @@ def get_contract_fun(
             )
     else:
         raise ValueError(
-            f'Got {implementation=}, expected "reconstructed" or "factorized"'
+            f'Got {implementation}, expected "reconstructed" or "factorized"'
         )
