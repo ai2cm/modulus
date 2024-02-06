@@ -58,11 +58,11 @@ class AI2SpectralConvS2(nn.Module):
         inverse_transform,
         in_channels,
         out_channels,
-        rank: float,
+        rank: float = 1.0,
         scale="auto",
         bias=False,
     ):  # pragma: no cover
-        super(SpectralConvS2, self).__init__()
+        super(AI2SpectralConvS2, self).__init__()
 
         if scale == "auto":
             scale = 1 / (in_channels * out_channels)
@@ -97,9 +97,11 @@ class AI2SpectralConvS2(nn.Module):
         basis_size = int(rank * self.modes_lat_local)
 
         self.w1 = nn.Parameter(
-            scale * torch.randn(in_channels, out_channels, basis_size, 2))
+            # scale * torch.randn(in_channels, out_channels, self.modes_lat_local, 2)
+            scale * torch.randn(in_channels, out_channels, basis_size, 2)
+        )
         self.w2 = nn.Parameter(
-            (2 * torch.rand(basis_size, self.modes_lat_local) - 0.5) / (basis_size ** 0.5)
+            (2 * torch.rand(basis_size, self.modes_lat_local, 2) - 0.5) / (basis_size ** 0.5)
         )
         self.w3 = nn.Parameter(
             torch.zeros(self.modes_lat_local, 2)
@@ -124,8 +126,9 @@ class AI2SpectralConvS2(nn.Module):
 
         # approach with unpadded weights
         xp = torch.zeros_like(x)
+        xr = torch.view_as_real(x[..., : self.modes_lat_local, : self.modes_lon_local])
         xp[..., : self.modes_lat_local, : self.modes_lon_local] = _contract_ai2_dhconv(
-            x[..., : self.modes_lat_local, : self.modes_lon_local],
+            xr,
             self.w1,
             self.w2,
             self.w3
@@ -143,7 +146,6 @@ class AI2SpectralConvS2(nn.Module):
         return x, residual
 
 
-@torch.jit.script
 def _contract_ai2_dhconv(
     a: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor, w3: torch.Tensor
 ) -> torch.Tensor:  # pragma: no cover
@@ -152,17 +154,18 @@ def _contract_ai2_dhconv(
     'a' and 'b'.
 
     Args:
-        a: input tensor
+        a: input tensor (complex)
         w1: weight basis, shape [in_dim, out_dim, weight_decomp] (complex)
         w2: weight amounts, shape [weight_decomp, modes_lat] (real)
         w3: scale factor weights, shape [modes_lat] (complex)
     """
     ac = torch.view_as_complex(a)
     w1c = torch.view_as_complex(w1)
+    w2c = torch.view_as_complex(w2)
     w3c = torch.view_as_complex(w3)
-    resc = torch.einsum("bixy,ioc,cx,x->boxy", ac, w1c, w2, w3c)
-    res = torch.view_as_real(resc)
-    return res
+    # resc = torch.einsum("bixy,iox->boxy", ac, w1c)
+    resc = torch.einsum("bixy,ioc,cx,x->boxy", ac, w1c, w2c, w3c)
+    return resc
 
 
 class SpectralConvS2(nn.Module):
@@ -285,6 +288,7 @@ class SpectralConvS2(nn.Module):
         dtype = x.dtype
         residual = x
         x = x.float()
+        import pdb;pdb.set_trace()
         B, C, H, W = x.shape
 
         with amp.autocast(enabled=False):
@@ -302,6 +306,7 @@ class SpectralConvS2(nn.Module):
             separable=self.separable,
             operator_type=self.operator_type,
         )
+        import pdb;pdb.set_trace()
         x = xp.contiguous()
 
         # # approach with padded weights
