@@ -764,7 +764,7 @@ class SphericalFourierNeuralOperatorNet(Module):
 
         # save big skip
         if self.big_skip:
-            residual = x
+            residual = self.itrans_up(self.trans_down(x))
 
         if self.checkpointing >= 1:
             x = checkpoint(self.encoder, x)
