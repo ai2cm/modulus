@@ -16,8 +16,8 @@ import torch
 import pytest
 import random
 
-from ai2modulus.models.layers.activations import Identity, Stan, SquarePlus
-from ai2modulus.models.layers.fused_silu import (
+from modulus.models.layers.activations import Identity, Stan, SquarePlus
+from modulus.models.layers.fused_silu import (
     FusedSiLU,
     FusedSiLU_deriv_1,
     FusedSiLU_deriv_2,

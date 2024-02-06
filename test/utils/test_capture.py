@@ -18,9 +18,9 @@ import pytest
 import torch
 import torch.nn as nn
 
-from ai2modulus.models.mlp import FullyConnected
-from ai2modulus.utils import StaticCaptureTraining, StaticCaptureEvaluateNoGrad
-from ai2modulus.utils.capture import _StaticCapture
+from modulus.models.mlp import FullyConnected
+from modulus.utils import StaticCaptureTraining, StaticCaptureEvaluateNoGrad
+from modulus.utils.capture import _StaticCapture
 
 try:
     from apex import optimizers

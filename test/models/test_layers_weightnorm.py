@@ -16,7 +16,7 @@ import torch
 import pytest
 import random
 
-from ai2modulus.models.layers import WeightNormLinear
+from modulus.models.layers import WeightNormLinear
 
 
 @pytest.mark.parametrize("device", ["cuda:0", "cpu"])

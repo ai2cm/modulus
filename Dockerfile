@@ -28,16 +28,16 @@ ENV _CUDA_COMPAT_TIMEOUT=90
 # Install custom onnx
 # TODO: Find a fix to eliminate the custom build
 # Forcing numpy update to over ride numba 0.56.4 max numpy constraint
-COPY . /ai2modulus/ 
-RUN if [ -e "/ai2modulus/deps/onnxruntime_gpu-1.14.0-cp38-cp38-linux_x86_64.whl" ]; then \
+COPY . /modulus/ 
+RUN if [ -e "/modulus/deps/onnxruntime_gpu-1.14.0-cp38-cp38-linux_x86_64.whl" ]; then \
 	echo "Custom wheel exists, installing!" && \
-	pip install --force-reinstall /ai2modulus/deps/onnxruntime_gpu-1.14.0-cp38-cp38-linux_x86_64.whl; \
+	pip install --force-reinstall /modulus/deps/onnxruntime_gpu-1.14.0-cp38-cp38-linux_x86_64.whl; \
     else \
 	echo "No custom wheel present, skipping" && \
 	pip install numpy==1.22.4; \
     fi
 # cleanup of stage
-RUN rm -rf /ai2modulus/ 
+RUN rm -rf /modulus/ 
 
 # CI image
 FROM builder as ci
@@ -63,17 +63,17 @@ RUN mkdir -p /opt/cugraphops &&\
 
 ENV PYTHONPATH="${PYTHONPATH}:/opt/cugraphops/lib/python3.8/site-packages"
 
-COPY . /ai2modulus/
-RUN cd /ai2modulus/ && pip install -e . && rm -rf /ai2modulus/
+COPY . /modulus/
+RUN cd /modulus/ && pip install -e . && rm -rf /modulus/
 
 # Deployment image
 FROM builder as deploy
 RUN pip install protobuf==3.20.0 
-COPY . /ai2modulus/
-RUN cd /ai2modulus/ && pip install .
+COPY . /modulus/
+RUN cd /modulus/ && pip install .
 
 # Clean up
-RUN rm -rf /ai2modulus/ 
+RUN rm -rf /modulus/ 
 
 # Docs image
 FROM deploy as docs

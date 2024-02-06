@@ -12,7 +12,7 @@ black:
 	black --check --exclude=docs/ ./
 
 interrogate:
-	cd ai2modulus && \
+	cd modulus && \
                 interrogate --ignore-init-method \
                 --ignore-init-module \
                 --ignore-module \
@@ -41,7 +41,7 @@ doctest:
 	coverage run \
                 --rcfile='test/coverage.docstring.rc' \
                 -m pytest \
-                --doctest-modules ai2modulus/ --ignore-glob=*internal*
+                --doctest-modules modulus/ --ignore-glob=*internal*
 
 pytest: 
 	coverage run \
@@ -59,11 +59,11 @@ coverage:
 		coverage html
 
 container-deploy:
-	docker build -t ai2modulus:deploy --target deploy -f Dockerfile .
+	docker build -t modulus:deploy --target deploy -f Dockerfile .
 
 container-ci:
-	docker build -t ai2modulus:ci --target ci -f Dockerfile .
+	docker build -t modulus:ci --target ci -f Dockerfile .
 
 container-docs:
-	docker build -t ai2modulus:docs --target docs -f Dockerfile .
+	docker build -t modulus:docs --target docs -f Dockerfile .
 

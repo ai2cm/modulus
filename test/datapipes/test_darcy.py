@@ -16,7 +16,7 @@ import pytest
 import torch
 
 from typing import Tuple
-from ai2modulus.datapipes.benchmarks.darcy import Darcy2D
+from modulus.datapipes.benchmarks.darcy import Darcy2D
 from . import common
 
 Tensor = torch.Tensor

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import ai2modulus
+import modulus
 
 import torch
 import logging
@@ -20,7 +20,7 @@ import logging
 logger = logging.getLogger("__name__")
 
 
-def check_datapipe_iterable(datapipe: ai2modulus.Datapipe, nr_iterations: int = 3) -> bool:
+def check_datapipe_iterable(datapipe: modulus.Datapipe, nr_iterations: int = 3) -> bool:
     """Checks if datapipe is iterable
 
     Parameters

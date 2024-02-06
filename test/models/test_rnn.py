@@ -16,8 +16,8 @@ import torch
 import pytest
 import random
 
-from ai2modulus.models.rnn.rnn_one2many import One2ManyRNN
-from ai2modulus.models.rnn.rnn_seq2seq import Seq2SeqRNN
+from modulus.models.rnn.rnn_one2many import One2ManyRNN
+from modulus.models.rnn.rnn_seq2seq import Seq2SeqRNN
 from . import common
 
 

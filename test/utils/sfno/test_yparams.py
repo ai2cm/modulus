@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import json
-from ai2modulus.utils.sfno.YParams import ParamsBase, YParams
+from modulus.utils.sfno.YParams import ParamsBase, YParams
 
 
 def test_ParamsBase():

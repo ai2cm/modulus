@@ -16,7 +16,7 @@ import torch
 import pytest
 import random
 
-from ai2modulus.models.srrn import SRResNet
+from modulus.models.srrn import SRResNet
 from . import common
 
 

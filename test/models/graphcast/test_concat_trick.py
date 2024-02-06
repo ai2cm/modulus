@@ -16,7 +16,7 @@ import torch
 import numpy as np
 
 from utils import get_icosphere_path, fix_random_seeds
-from ai2modulus.models.graphcast.graph_cast_net import GraphCastNet
+from modulus.models.graphcast.graph_cast_net import GraphCastNet
 
 icosphere_path = get_icosphere_path()
 

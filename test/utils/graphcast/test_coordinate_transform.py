@@ -16,7 +16,7 @@
 import torch
 import pytest
 
-from ai2modulus.utils.graphcast.graph_utils import latlon2xyz, xyz2latlon
+from modulus.utils.graphcast.graph_utils import latlon2xyz, xyz2latlon
 
 
 @pytest.mark.parametrize("latlon", [[-27.0, 48.0], [0, 0], [62.0, -45.0]])

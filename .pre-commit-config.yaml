@@ -29,7 +29,7 @@ repos:
           "--ignore-magic", "--fail-under=99", "--exclude=['setup.py', 'test', 'build', 'docs']",  
           "--ignore-regex=['forward', 'reset_parameters', 'extra_repr', 'MetaData', 'apply_activation','exec_activation']", 
           "--color", "--"]
-      exclude: ^ai2modulus/internal/
+      exclude: ^modulus/internal/
 
 -   repo: local
     hooks:

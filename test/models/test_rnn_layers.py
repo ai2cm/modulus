@@ -15,7 +15,7 @@
 import torch
 import pytest
 
-from ai2modulus.models.rnn.layers import (
+from modulus.models.rnn.layers import (
     _ConvLayer,
     _TransposeConvLayer,
     _ConvResidualBlock,

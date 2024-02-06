@@ -16,7 +16,7 @@ import torch
 import pytest
 import random
 
-from ai2modulus.models.mlp import FullyConnected
+from modulus.models.mlp import FullyConnected
 from . import common
 
 

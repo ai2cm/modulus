@@ -16,7 +16,7 @@ import torch
 import pytest
 
 from utils import fix_random_seeds, create_random_input, get_icosphere_path
-from ai2modulus.models.graphcast.graph_cast_net import GraphCastNet
+from modulus.models.graphcast.graph_cast_net import GraphCastNet
 
 
 @pytest.mark.parametrize("device", ["cuda:0", "cpu"])

@@ -16,7 +16,7 @@
 import pytest
 from unittest.mock import MagicMock
 
-from ai2modulus.datapipes.climate.sfno.dataloaders.data_loader_dummy import DummyLoader
+from modulus.datapipes.climate.sfno.dataloaders.data_loader_dummy import DummyLoader
 
 
 def test_dummyloader():
