@@ -216,7 +216,7 @@ def _contract_sep_dhconv(
     ac = torch.view_as_complex(a)
     w1c = torch.view_as_complex(w1)
     w2c = torch.view_as_complex(w2)
-    resc = torch.einsum("bixy,io,oy->boxy", ac, w1c, w2c)
+    resc = torch.einsum("bixy,io,ox->boxy", ac, w1c, w2c)
     res = torch.view_as_real(resc)
     return res
 
