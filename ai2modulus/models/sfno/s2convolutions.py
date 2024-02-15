@@ -100,11 +100,6 @@ class SpectralConvS2(nn.Module):
         assert self.inverse_transform.lmax == self.modes_lat
         assert self.inverse_transform.mmax == self.modes_lon
 
-        weight_shape = [in_channels]
-
-        if not self.separable:
-            weight_shape += [out_channels]
-
         if isinstance(self.inverse_transform, thd.DistributedInverseRealSHT):
             self.modes_lat_local = self.inverse_transform.lmax_local
             self.modes_lon_local = self.inverse_transform.mmax_local
@@ -116,45 +111,53 @@ class SpectralConvS2(nn.Module):
             self.lpad = 0
             self.mpad = 0
 
-        # padded weights
-        # if self.operator_type == 'diagonal':
-        #     weight_shape += [self.modes_lat_local+self.lpad_local, self.modes_lon_local+self.mpad_local]
-        # elif self.operator_type == 'dhconv':
-        #     weight_shape += [self.modes_lat_local+self.lpad_local]
-        # else:
-        #     raise ValueError(f"Unsupported operator type f{self.operator_type}")
-
-        # unpadded weights
-        if self.operator_type == "diagonal":
-            weight_shape += [self.modes_lat_local, self.modes_lon_local]
-        elif self.operator_type == "dhconv":
-            weight_shape += [self.modes_lat_local]
-        else:
-            raise ValueError(f"Unsupported operator type f{self.operator_type}")
-
-        if use_tensorly:
-            # form weight tensors
-            self.weight = FactorizedTensor.new(
-                weight_shape,
-                rank=self.rank,
-                factorization=factorization,
-                fixed_rank_modes=False,
-                **decomposition_kwargs,
-            )
-            # initialization of weights
-            self.weight.normal_(0, scale)
-        else:
-            assert factorization == "ComplexDense"
+        weight_shape = [in_channels, out_channels]
+        if self.separable:
+            if self.operator_type == "diagonal":
+                raise NotImplementedError(
+                    "Diagonal separable operator not implemented"
+                )
             self.weight = nn.Parameter(scale * torch.randn(*weight_shape, 2))
-            if self.operator_type == "dhconv":
-                self.weight.is_shared_mp = ["matmul", "w"]
+            self.weight2 = nn.Parameter(scale * torch.randn(
+                out_channels, self.modes_lat_local, 2)
+            )
+            if use_tensorly:
+                raise NotImplementedError(
+                    "Separable operator not implemented with tensorly"
+                )
+            self._contract
+        else:
+            # unpadded weights
+            if self.operator_type == "diagonal":
+                weight_shape += [self.modes_lat_local, self.modes_lon_local]
+            elif self.operator_type == "dhconv":
+                weight_shape += [self.modes_lat_local]
             else:
-                self.weight.is_shared_mp = ["matmul"]
+                raise ValueError(f"Unsupported operator type f{self.operator_type}")
 
-        # get the contraction handle
-        self._contract = get_contract_fun(
-            self.weight, implementation="factorized", separable=separable
-        )
+            if use_tensorly:
+                # form weight tensors
+                self.weight = FactorizedTensor.new(
+                    weight_shape,
+                    rank=self.rank,
+                    factorization=factorization,
+                    fixed_rank_modes=False,
+                    **decomposition_kwargs,
+                )
+                # initialization of weights
+                self.weight.normal_(0, scale)
+            else:
+                assert factorization == "ComplexDense"
+                self.weight = nn.Parameter(scale * torch.randn(*weight_shape, 2))
+                if self.operator_type == "dhconv":
+                    self.weight.is_shared_mp = ["matmul", "w"]
+                else:
+                    self.weight.is_shared_mp = ["matmul"]
+
+            # get the contraction handle
+            self._contract = get_contract_fun(
+                self.weight, implementation="factorized", separable=separable
+            )
 
         if bias:
             self.bias = nn.Parameter(scale * torch.zeros(1, out_channels, 1, 1))
@@ -175,12 +178,19 @@ class SpectralConvS2(nn.Module):
 
         # approach with unpadded weights
         xp = torch.zeros_like(x)
-        xp[..., : self.modes_lat_local, : self.modes_lon_local] = self._contract(
-            x[..., : self.modes_lat_local, : self.modes_lon_local],
-            self.weight,
-            separable=self.separable,
-            operator_type=self.operator_type,
-        )
+        if self.separable:
+            xp[..., : self.modes_lat_local, : self.modes_lon_local] = _contract_sep_dhconv(
+                torch.view_as_real(x[..., : self.modes_lat_local, : self.modes_lon_local]),
+                self.weight,
+                self.weight2,
+            )
+        else:
+            xp[..., : self.modes_lat_local, : self.modes_lon_local] = self._contract(
+                x[..., : self.modes_lat_local, : self.modes_lon_local],
+                self.weight,
+                separable=self.separable,
+                operator_type=self.operator_type,
+            )
         x = xp.contiguous()
 
         # # approach with padded weights
@@ -196,6 +206,18 @@ class SpectralConvS2(nn.Module):
         x = x.type(dtype)
 
         return x, residual
+
+
+@torch.jit.script
+def _contract_sep_dhconv(
+    a: torch.Tensor, w1: torch.Tensor, w2: torch.Tensor
+) -> torch.Tensor:  # pragma: no cover
+    ac = torch.view_as_complex(a)
+    w1c = torch.view_as_complex(w1)
+    w2c = torch.view_as_complex(w2)
+    resc = torch.einsum("bixy,io,oy->boxy", ac, w1c, w2c)
+    res = torch.view_as_real(resc)
+    return res
 
 
 class LocalConvS2(nn.Module):
