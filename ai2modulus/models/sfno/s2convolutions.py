@@ -125,7 +125,6 @@ class SpectralConvS2(nn.Module):
                 raise NotImplementedError(
                     "Separable operator not implemented with tensorly"
                 )
-            self._contract
         else:
             # unpadded weights
             if self.operator_type == "diagonal":
