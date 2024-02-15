@@ -178,10 +178,12 @@ class SpectralConvS2(nn.Module):
         # approach with unpadded weights
         xp = torch.zeros_like(x)
         if self.separable:
-            xp[..., : self.modes_lat_local, : self.modes_lon_local] = _contract_sep_dhconv(
-                torch.view_as_real(x[..., : self.modes_lat_local, : self.modes_lon_local]),
-                self.weight,
-                self.weight2,
+            xp[..., : self.modes_lat_local, : self.modes_lon_local] = torch.view_as_complex(
+                _contract_sep_dhconv(
+                    torch.view_as_real(x[..., : self.modes_lat_local, : self.modes_lon_local]),
+                    self.weight,
+                    self.weight2,
+                )
             )
         else:
             xp[..., : self.modes_lat_local, : self.modes_lon_local] = self._contract(
