@@ -293,6 +293,16 @@ class FourierNeuralOperatorBlock(nn.Module):
         return x
 
 
+class Multiply(nn.Module):
+
+    def __init__(self, factor: torch.Tensor):
+        super(Multiply, self).__init__()
+        self.factor = factor
+
+    def forward(self, x):
+        return x * self.factor
+
+
 class SphericalFourierNeuralOperatorNet(Module):
     """
     Spherical Fourier Neural Operator Network
@@ -359,6 +369,10 @@ class SphericalFourierNeuralOperatorNet(Module):
         Number of spectral layers, by default 3
     checkpointing : int, optional
         Number of checkpointing segments, by default 0
+    big_latent_skip : bool, optional
+        Whether to use big latent skip connection, by default False
+    relaxation: float, optional
+        Relaxation parameter applied to big_latent_skip, by default 1.0
 
     Example:
     --------
@@ -411,6 +425,8 @@ class SphericalFourierNeuralOperatorNet(Module):
         complex_activation: str = "real",
         spectral_layers: int = 3,
         checkpointing: int = 0,
+        big_latent_skip: bool = False,
+        relaxation: float = 1.0,
     ):
 
         super(SphericalFourierNeuralOperatorNet, self).__init__(meta=MetaData())
@@ -732,6 +748,9 @@ class SphericalFourierNeuralOperatorNet(Module):
             # self.pos_embed = nn.Parameter( torch.zeros(1, self.embed_dim, self.img_shape_eff[0], self.img_shape_eff[1]) )
             self.pos_embed.is_shared_mp = ["matmul"]
             trunc_normal_(self.pos_embed, std=0.02)
+        
+        self.big_latent_skip = big_latent_skip
+        self.relaxation = Multiply(torch.as_tensor(1.0 - relaxation))
 
         self.apply(self._init_weights)
 
@@ -770,6 +789,9 @@ class SphericalFourierNeuralOperatorNet(Module):
             x = checkpoint(self.encoder, x)
         else:
             x = self.encoder(x)
+        
+        if self.big_latent_skip:
+            latent_residual = x
 
         if hasattr(self, "pos_embed"):
 
@@ -789,6 +811,9 @@ class SphericalFourierNeuralOperatorNet(Module):
         x = self.pos_drop(x)
 
         x = self._forward_features(x)
+
+        if self.big_latent_skip:
+            x = x + self.relaxation(latent_residual)
 
         if self.big_skip:
             x = torch.cat((x, residual), dim=1)
